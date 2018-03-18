@@ -16,89 +16,26 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 
-public class Indexer {
+public class Indexer{
 
     private IndexWriter writer;
 
-    public Indexer(String indexDirectoryPath) throws IOException {
+    Indexer(String indexDirectoryPath) throws IOException {
 //        //this directory will contain the indexes
         Analyzer analyzer = new StandardAnalyzer();
-
         Directory directory = FSDirectory.open(Paths.get(indexDirectoryPath));
-
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
         writer = new IndexWriter(directory, config);
     }
 
-    public void close() throws CorruptIndexException, IOException {
-        writer.close();
-    }
+
 
     private Document getDocument(File file) throws IOException {
         Document document = new Document();
-        //IndexableFieldType indexableFile = (IndexableFieldType) new FileReader(file);
-        IndexableFieldType indexableFile = new IndexableFieldType() {
-            @Override
-            public boolean stored() {
-                return true;
-            }
 
-            @Override
-            public boolean tokenized() {
-                return false;
-            }
-
-            @Override
-            public boolean storeTermVectors() {
-                return false;
-            }
-
-            @Override
-            public boolean storeTermVectorOffsets() {
-                return false;
-            }
-
-            @Override
-            public boolean storeTermVectorPositions() {
-                return false;
-            }
-
-            @Override
-            public boolean storeTermVectorPayloads() {
-                return false;
-            }
-
-            @Override
-            public boolean omitNorms() {
-                return false;
-            }
-
-            @Override
-            public IndexOptions indexOptions() {
-                return null;
-            }
-
-            @Override
-            public DocValuesType docValuesType() {
-                return null;
-            }
-
-            @Override
-            public int pointDimensionCount() {
-                return 0;
-            }
-
-            @Override
-            public int pointNumBytes() {
-                return 0;
-            }
-        };
-        //index file contents
-        Field contentField = new Field(LuceneConstants.CONTENTS, "contentName" , indexableFile);
-        //index file name
-        Field fileNameField = new Field(LuceneConstants.FILE_NAME, file.getName(),  indexableFile  );
-        //index file path
-        Field filePathField = new Field(LuceneConstants.FILE_PATH, file.getCanonicalPath(), indexableFile );
+        Field contentField = new Field(LuceneConstants.CONTENTS, new FileReader(file), TextField.TYPE_NOT_STORED);
+        Field fileNameField = new Field(LuceneConstants.FILE_NAME, file.getName(), TextField.TYPE_STORED);
+        Field filePathField = new Field(LuceneConstants.FILE_PATH, file.getCanonicalPath(),TextField.TYPE_STORED );
 
         document.add(contentField);
         document.add(fileNameField);
@@ -129,5 +66,9 @@ public class Indexer {
             }
         }
         return writer.numDocs();
+    }
+
+    public void close() throws IOException {
+        writer.close();
     }
 }
