@@ -45,6 +45,23 @@
             <artifactId>lucene-queries</artifactId>
             <version>7.2.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-analyzers-common</artifactId>
+            <version>7.2.1</version>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>org.thymeleaf</groupId>-->
+            <!--<artifactId>thymeleaf</artifactId>-->
+            <!--<version>3.0.9.RELEASE</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.thymeleaf</groupId>-->
+            <!--<artifactId>thymeleaf-spring4</artifactId>-->
+            <!--<version>2.1.4.RELEASE</version>-->
+        <!--</dependency>-->
     </dependencies>
 
     <properties>

@@ -5,9 +5,8 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan({"Start"})
-public class Index {
-
+public class StartServer {
     public static void main(String[] args) {
-        SpringApplication.run(Index.class, args);
+        SpringApplication.run(StartServer.class, args);
     }
 }
