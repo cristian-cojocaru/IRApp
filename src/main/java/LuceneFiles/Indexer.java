@@ -5,7 +5,7 @@ import java.io.FileFilter;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Paths;
-
+import RoAnalyzer.*;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.ro.RomanianAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -23,12 +23,11 @@ public class Indexer{
 
     Indexer(String indexDirectoryPath) throws IOException {
 //        //this directory will contain the indexes
-        Analyzer analyzer = new RomanianAnalyzer();
+        Analyzer analyzer = new RoAnalyzer();
         Directory directory = FSDirectory.open(Paths.get(indexDirectoryPath));
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
         writer = new IndexWriter(directory, config);
     }
-
 
 
     private Document getDocument(File file) throws IOException {
