@@ -1,2 +1,2 @@
-# IR-Projecct
-Information retrival project built with Apache Lucene
+# IRApp
+Information retrieval system built with Apache Lucene for Romanian language.

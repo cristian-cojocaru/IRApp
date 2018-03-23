@@ -1,31 +1,32 @@
 <!DOCTYPE HTML>
-<html dir="ltr" lang="en-US">
+<html dir="ltr" lang="en-US" xmlns:th="http://www.w3.org/1999/xhtml">
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>Information Retrieval System</title>
 
-
 	<link rel="stylesheet" href="static/style.css" type="text/css" />
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,600,700' rel='stylesheet' type='text/css'>
 
-
-	<script type="text/javascript" src="static/js/jquery-1.7.1.min.js"></script>
-	<script type="text/javascript" src="static/js/jquery.easing.1.3.js"></script>
 	<script type="text/javascript" src="static/js/functions.js"></script>
+
 	</head>
 
 	<body>
-
-	<p id="demo"></p>
 		<div id="search-form">
-			<form id = "form-container" class="form-container" method="get" >
-				<input id="searchBox" type="text" class="search-field" value="Type search text here..." />
+			<form id = "form-container" class="form-container" method="get" action="/search">
+				<input name= "query" id="searchBox" type="text" class="search-field" />
 				<div class="submit-container">
-					<input id="submitBtn" type="submit" value="" class="submit"/>
+					<button id="submitBtn" type="submit" value="" class="submit" onclick="submit()"/>
 				</div>
+
 			</form>
-			<div class="popup">
-				<p>Please fill out this field.</p>
+		</div>
+
+		<div id = "results">
+			<div th:with="strList = ${ fileName }">
+				<ul>
+					<li th:each="s : ${strList}" th:text="|${s}|"></li>
+				</ul>
+
 			</div>
 		</div>
 	</body>
