@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,7 +22,6 @@ public class QueryController {
     public String queryMethod(Model model, @RequestParam String query){
         System.out.println("\nyou want to search = " + query);
         List<String> filesList = new ArrayList<>();
-        //start searching the key
         Searcher searcher;
         try {
             searcher = new Searcher(LuceneConstants.indexDir);
@@ -46,10 +44,4 @@ public class QueryController {
         }
         return "index";
     }
-
-//    @RequestMapping("/?")
-//    public String hello(Model model, @RequestParam(value="fileName", required=false, defaultValue="Error") String name) {
-//        model.addAttribute("fileName", name);
-//        return "index";
-//    }
 }

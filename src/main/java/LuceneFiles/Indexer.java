@@ -1,38 +1,34 @@
 package LuceneFiles;
 
+import RoAnalyzer.RoAnalyzer;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.TextField;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Paths;
-import RoAnalyzer.*;
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.ro.RomanianAnalyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.TextField;
-import org.apache.lucene.index.*;
-import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.util.Version;
 
 public class Indexer{
 
     private IndexWriter writer;
 
     Indexer(String indexDirectoryPath) throws IOException {
-//        //this directory will contain the indexes
-        Analyzer analyzer = new RoAnalyzer();
+        Analyzer analyzer = new RoAnalyzer(LuceneConstants.customSW);
         Directory directory = FSDirectory.open(Paths.get(indexDirectoryPath));
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
         writer = new IndexWriter(directory, config);
     }
 
-
     private Document getDocument(File file) throws IOException {
         Document document = new Document();
-
         Field contentField = new Field(LuceneConstants.CONTENTS, new FileReader(file), TextField.TYPE_NOT_STORED);
         Field fileNameField = new Field(LuceneConstants.FILE_NAME, file.getName(), TextField.TYPE_STORED);
         Field filePathField = new Field(LuceneConstants.FILE_PATH, file.getCanonicalPath(),TextField.TYPE_STORED );

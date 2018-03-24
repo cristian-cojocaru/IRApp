@@ -1,7 +1,7 @@
 package LuceneFiles;
-import RoAnalyzer.*;
+
+import RoAnalyzer.RoAnalyzer;
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.ro.RomanianAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -24,7 +24,7 @@ public class Searcher {
     Query query;
 
     public Searcher(String indexDirectoryPath) throws IOException {
-        Analyzer analyzer = new RoAnalyzer();
+        Analyzer analyzer = new RoAnalyzer(LuceneConstants.customSW);
         Directory directory =  FSDirectory.open(Paths.get(indexDirectoryPath));
         indexReader = DirectoryReader.open(directory);
         indexSearcher = new IndexSearcher(indexReader);
