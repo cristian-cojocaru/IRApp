@@ -63,7 +63,48 @@
             <version>7.2.1</version>
         </dependency>
 
+        <!--org.apache.tika/tika-core -->
+        <dependency>
+            <groupId>org.apache.tika</groupId>
+            <artifactId>tika-core</artifactId>
+            <version>1.17</version>
+        </dependency>
 
+        <!-- org.apache.tika/tika-parsers -->
+        <dependency>
+            <groupId>org.apache.tika</groupId>
+            <artifactId>tika-parsers</artifactId>
+            <version>1.17</version>
+        </dependency>
+
+        <!-- org.apache.tika/tika -->
+        <dependency>
+            <groupId>org.apache.tika</groupId>
+            <artifactId>tika</artifactId>
+            <version>1.17</version>
+            <type>pom</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>2.0.8</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/fontbox -->
+        <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/fontbox -->
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>fontbox</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>jbig2-imageio</artifactId>
+            <version>3.0.0</version>
+        </dependency>
         <!--thymeleaf-->
 
         <!--<dependency>-->
@@ -80,6 +121,20 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <service-loader initializableProblemHandler="throw"/>
+        <!--<parsers>-->
+            <!--&lt;!&ndash; Default Parser for most things, except for 2 mime types, and never-->
+                 <!--use the Executable Parser &ndash;&gt;-->
+            <!--<parser class="org.apache.tika.parser.DefaultParser">-->
+                <!--<mime-exclude>image/jpeg</mime-exclude>-->
+                <!--<mime-exclude>application/pdf</mime-exclude>-->
+                <!--<parser-exclude class="org.apache.tika.parser.executable.ExecutableParser"/>-->
+            <!--</parser>-->
+            <!--&lt;!&ndash; Use a different parser for PDF &ndash;&gt;-->
+            <!--<parser class="org.apache.tika.parser.EmptyParser">-->
+                <!--<mime>application/pdf</mime>-->
+            <!--</parser>-->
+        <!--</parsers>-->
     </properties>
 
     <build>
@@ -90,5 +145,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>

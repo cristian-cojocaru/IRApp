@@ -1,5 +1,8 @@
 package LuceneFiles;
 
+import org.apache.tika.exception.TikaException;
+import org.xml.sax.SAXException;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -18,14 +21,14 @@ public class StartIndexing {
         folder.delete();
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws TikaException, SAXException {
         Indexer indexer;
         deleteContentFolder(new File(LuceneConstants.indexDir));
         try {
             indexer = new Indexer(LuceneConstants.indexDir);
             int numIndexed;
             long startTime = System.currentTimeMillis();
-            numIndexed = indexer.createIndex(LuceneConstants.dataDir, new TextFileFilter());
+            numIndexed = indexer.createIndex(LuceneConstants.dataDir, new Filter());
             long endTime = System.currentTimeMillis();
             indexer.close();
             System.out.println(numIndexed+" Files indexed, time taken: " +(endTime-startTime)+" ms");
