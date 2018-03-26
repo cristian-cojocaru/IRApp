@@ -14,14 +14,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class QueryController {
     @RequestMapping(value="/search", method=RequestMethod.GET)
     public String queryMethod(Model model, @RequestParam String query){
-        System.out.println("\nyou want to search = " + query);
-        List<String> filesList = new ArrayList<>();
+        List<Map<String, String>> files = new ArrayList<Map<String, String>>();
+//        List<String> filesList = new ArrayList<>();
+//        List<String> filesContent = new ArrayList<>();
         Searcher searcher;
         try {
             searcher = new Searcher(LuceneConstants.indexDir);
@@ -32,14 +35,17 @@ public class QueryController {
             System.out.println(hits.totalHits + " documents found. Time :" + (endTime - startTime));
             for(ScoreDoc scoreDoc : hits.scoreDocs) {
                 Document doc = searcher.getDocument(scoreDoc);
-                System.out.println("File: " + doc.get(LuceneConstants.FILE_PATH));
-                filesList.add(doc.get(LuceneConstants.FILE_PATH));
+//                filesList.add(doc.get(LuceneConstants.FILE_NAME) + " ===> "+ doc.get(LuceneConstants.FILE_PATH));
+//                filesContent.add(doc.get(LuceneConstants.CONTENTS));
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("name", doc.get(LuceneConstants.FILE_NAME));
+                map.put("content", doc.get(LuceneConstants.CONTENTS));
+                files.add(map);
             }
-            model.addAttribute("fileName", filesList);
+
+            model.addAttribute("files", files);
             searcher.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
         return "index";

@@ -36,9 +36,8 @@ public final class RoAnalyzer extends StopwordAnalyzerBase {
 
         result = new LowerCaseFilter(result);
         result = new ASCIIFoldingFilter(result);
-        result = new SnowballFilter(result, new RomanianStemmer());
         result = new StopFilter(result, this.stemExclusionSet);
-
+        result = new SnowballFilter(result, new RomanianStemmer());
 
         return new TokenStreamComponents(source, result);
     }

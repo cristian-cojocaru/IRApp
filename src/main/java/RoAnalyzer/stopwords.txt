@@ -232,6 +232,7 @@ lor
 lui
 lângă
 lîngă
+langa
 m
 ma
 mai

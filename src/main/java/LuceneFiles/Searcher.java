@@ -18,10 +18,9 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 public class Searcher {
-    IndexReader indexReader;
-    IndexSearcher indexSearcher;
-    QueryParser queryParser;
-    Query query;
+    private IndexReader indexReader;
+    private IndexSearcher indexSearcher;
+    private QueryParser queryParser;
 
     public Searcher(String indexDirectoryPath) throws IOException {
         Analyzer analyzer = new RoAnalyzer(LuceneConstants.customSW);
@@ -32,7 +31,7 @@ public class Searcher {
     }
 
     public TopDocs search( String searchQuery) throws IOException, ParseException {
-        query = queryParser.parse(searchQuery);
+        Query query = queryParser.parse(searchQuery);
         return indexSearcher.search(query, LuceneConstants.MAX_SEARCH);
     }
 

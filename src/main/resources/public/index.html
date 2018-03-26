@@ -22,12 +22,12 @@
 		</div>
 
 		<div id = "results">
-			<div th:with="strList = ${ fileName }">
-				<ul>
-					<li th:each="s : ${strList}" th:text="|${s}|"></li>
-				</ul>
-
-			</div>
+			<ul th:each=" item : ${files}">
+				<li>
+					<span th:utext="${item.name}"></span>
+					<p th:utext="${#strings.replace( #strings.escapeXml(item.content),T(java.lang.System).getProperty('line.separator'),'&lt;br /&gt;')}" ></p>
+				</li>
+			</ul>
 		</div>
 	</body>
 </html>
