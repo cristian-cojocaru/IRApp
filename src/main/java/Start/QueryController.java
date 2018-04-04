@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import org.apache.lucene.search.ScoreDoc;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,11 +37,12 @@ public class QueryController {
             System.out.println(hits.totalHits + " documents found. Time :" + (endTime - startTime));
             for(ScoreDoc scoreDoc : hits.scoreDocs) {
                 Document doc = searcher.getDocument(scoreDoc);
-//                filesList.add(doc.get(LuceneConstants.FILE_NAME) + " ===> "+ doc.get(LuceneConstants.FILE_PATH));
-//                filesContent.add(doc.get(LuceneConstants.CONTENTS));
-                Map<String, String> map = new HashMap<String, String>();
-                map.put("name", doc.get(LuceneConstants.FILE_NAME));
+                Map<String, String> map = new HashMap<>();
+                map.put("name", "File name: " + doc.get(LuceneConstants.FILE_NAME));
                 map.put("content", doc.get(LuceneConstants.CONTENTS));
+                DecimalFormat df = new DecimalFormat("##.###");
+                map.put("score", "Score: " +   df.format(scoreDoc.score *100));
+                System.out.println(doc.get(LuceneConstants.FILE_NAME) + " " + scoreDoc.score *100);
                 files.add(map);
             }
 

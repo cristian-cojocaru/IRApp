@@ -24,7 +24,8 @@
 		<div id = "results">
 			<ul th:each=" item : ${files}">
 				<li>
-					<span th:utext="${item.name}"></span>
+					<b><span th:utext="${item.name}"></span></b>
+					<b><span th:utext="${item.score}"></span></b>
 					<p th:utext="${#strings.replace( #strings.escapeXml(item.content),T(java.lang.System).getProperty('line.separator'),'&lt;br /&gt;')}" ></p>
 				</li>
 			</ul>
