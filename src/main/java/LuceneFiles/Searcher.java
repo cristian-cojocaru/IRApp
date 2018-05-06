@@ -5,6 +5,7 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
@@ -20,14 +21,16 @@ import java.nio.file.Paths;
 public class Searcher {
     private IndexReader indexReader;
     private IndexSearcher indexSearcher;
-    private QueryParser queryParser;
+//    private QueryParser queryParser;
+    private MultiFieldQueryParser queryParser;
 
     public Searcher(String indexDirectoryPath) throws IOException {
         Analyzer analyzer = new RoAnalyzer(LuceneConstants.customSW);
         Directory directory =  FSDirectory.open(Paths.get(indexDirectoryPath));
         indexReader = DirectoryReader.open(directory);
         indexSearcher = new IndexSearcher(indexReader);
-        queryParser = new QueryParser(LuceneConstants.CONTENTS, analyzer);
+        queryParser = new MultiFieldQueryParser(new String[] {LuceneConstants.CONTENTS, "importantText"}, analyzer);
+//        queryParser = new QueryParser(LuceneConstants.CONTENTS, analyzer);
     }
 
     public TopDocs search( String searchQuery) throws IOException, ParseException {

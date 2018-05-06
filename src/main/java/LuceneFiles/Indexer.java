@@ -4,6 +4,7 @@ import RoAnalyzer.RoAnalyzer;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.FloatDocValuesField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
@@ -33,12 +34,35 @@ public class Indexer{
         return new Tika().parseToString(file);
     }
 
+    private String getImportantText(int floor, int ceil, String text){
+        String[] parts = text.split(" ");
+        if(ceil > parts.length)
+            ceil = parts.length;
+        if(floor > ceil)
+            return null;
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for(int i=floor;i<ceil;i++){
+            stringBuilder.append(parts[i] + " ");
+        }
+        return stringBuilder.toString();
+    }
+
     private Document getDocument(File file) throws IOException, TikaException, SAXException {
         Document document = new Document();
 
         Field contentField = new Field(LuceneConstants.CONTENTS, extractContent(file), TextField.TYPE_STORED);
         Field fileNameField = new Field(LuceneConstants.FILE_NAME, file.getName(), TextField.TYPE_STORED);
         Field filePathField = new Field(LuceneConstants.FILE_PATH, file.getCanonicalPath(),TextField.TYPE_STORED );
+
+        String text;
+        int floor = 0, ceil = 10;
+        if((text = getImportantText(floor, ceil, extractContent(file)))!=null) {
+            Field importantField = new Field(LuceneConstants.IMPORTANT_TEXT, text, TextField.TYPE_NOT_STORED);
+            System.out.println(importantField.stringValue());
+            document.add(importantField);
+        }
+
         document.add(contentField);
         document.add(fileNameField);
         document.add(filePathField);

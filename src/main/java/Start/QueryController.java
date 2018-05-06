@@ -25,8 +25,6 @@ public class QueryController {
     @RequestMapping(value="/search", method=RequestMethod.GET)
     public String queryMethod(Model model, @RequestParam String query){
         List<Map<String, String>> files = new ArrayList<Map<String, String>>();
-//        List<String> filesList = new ArrayList<>();
-//        List<String> filesContent = new ArrayList<>();
         Searcher searcher;
         try {
             searcher = new Searcher(LuceneConstants.indexDir);
