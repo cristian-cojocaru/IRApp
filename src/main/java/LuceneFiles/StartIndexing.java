@@ -9,7 +9,7 @@ import java.io.IOException;
 public class StartIndexing {
     private static void deleteContentFolder(File folder) {
         File[] files = folder.listFiles();
-        if(files!=null) { //some JVMs return null for empty dirs
+        if(files!=null) {
             for(File f: files) {
                 if(f.isDirectory()) {
                     deleteContentFolder(f);

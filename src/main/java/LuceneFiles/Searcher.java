@@ -1,38 +1,26 @@
 package LuceneFiles;
 
 import RoAnalyzer.RoAnalyzer;
-import org.apache.lucene.analysis.*;
-import org.apache.lucene.analysis.core.StopAnalyzer;
-import org.apache.lucene.analysis.en.PorterStemFilter;
-import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilter;
-import org.apache.lucene.analysis.snowball.SnowballFilter;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.analysis.standard.StandardFilter;
-import org.apache.lucene.analysis.standard.StandardTokenizer;
-import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.*;
 import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.ParseException;
-import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.queryparser.classic.Token;
-import org.apache.lucene.search.*;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-
-
-import org.apache.lucene.search.similarities.TFIDFSimilarity;
 import org.apache.lucene.util.BytesRef;
 import org.tartarus.snowball.ext.RomanianStemmer;
 
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import static java.lang.Math.log10;
+import static java.lang.StrictMath.log;
 
 public class Searcher {
     private IndexReader indexReader;
@@ -82,9 +70,10 @@ public class Searcher {
                 while (termsEnum.next() != null) {
                     if (termsEnum.term().utf8ToString().equals(queryTerm)) {
                         int freq = currentDocFreq(docId, termsEnum.term(), reader);
-                        double idf = Math.log10(reader.numDocs() / termsEnum.docFreq());
+//                        double idf = Math.log10(reader.numDocs() / termsEnum.docFreq());
+//                        double idf = );
                         double tf = freq == 0 ? 0 : 1 + Math.log10(freq);
-                        System.out.println("\twordRoot = "+ queryTerm + "   TF = " + tf + " IDF = " + idf);
+                        System.out.println("\twordRoot = "+ queryTerm + "   TF = " + tf + " IDF = " + log((double)reader.numDocs() / termsEnum.docFreq()));
                     }
                 }
             }

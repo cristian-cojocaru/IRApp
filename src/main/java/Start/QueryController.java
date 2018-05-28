@@ -3,25 +3,21 @@ package Start;
 import LuceneFiles.LuceneConstants;
 import LuceneFiles.Searcher;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.index.*;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
-import org.apache.lucene.search.similarities.TFIDFSimilarity;
-import org.apache.lucene.util.BytesRef;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import org.apache.lucene.search.ScoreDoc;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.*;
-
-import static java.lang.Math.log10;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class QueryController {
